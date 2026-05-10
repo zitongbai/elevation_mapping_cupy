@@ -69,12 +69,22 @@ RUN --mount=type=cache,target=/var/cache/apt,sharing=locked \
       python3-yaml \
     && rm -rf /var/lib/apt/lists/*
 
-# Torch: traversability filter backend (CUDA). Use cu121 wheels (works on modern drivers).
-RUN python3 -m pip install --no-cache-dir --break-system-packages -U --extra-index-url https://download.pytorch.org/whl/cu121 \
-    torch torchvision torchaudio
+# Torch: traversability filter backend (CUDA). Use the Aliyun mirror for the PyTorch wheel index.
+# Pin versions that are published for Python 3.12 on Ubuntu 24.04.
+ARG PYTORCH_INDEX_URL=https://mirrors.nju.edu.cn/pytorch/whl/cu121
+ARG PYPI_INDEX_URL=https://mirrors.aliyun.com/pypi/simple
+ARG TORCH_VERSION=2.5.1
+ARG TORCHVISION_VERSION=0.20.1
+ARG TORCHAUDIO_VERSION=2.5.1
+RUN python3 -m pip install --no-cache-dir --break-system-packages -U \
+    --index-url "${PYTORCH_INDEX_URL}" \
+    "torch==${TORCH_VERSION}" \
+    "torchvision==${TORCHVISION_VERSION}" \
+    "torchaudio==${TORCHAUDIO_VERSION}"
 
 RUN python3 -m pip install --no-cache-dir --break-system-packages \
-    cupy-cuda12x \
+    --index-url "${PYPI_INDEX_URL}" \
+    cupy-cuda12x==13.4.1 \
     simple-parsing
 
 # Non-root user (so mounted workspaces behave).
