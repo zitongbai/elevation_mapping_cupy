@@ -1,0 +1,21 @@
+/elevation_mapping_node:
+  ros__parameters:
+    map_frame: "odom"
+    base_frame: "base"
+    corrected_map_frame: "odom"
+    initialize_frame_id: ["base"]
+
+    subscribers:
+      mid360:
+        topic_name: "/cloud_registered"
+        data_type: "pointcloud"
+
+    publishers:
+      elevation_map_raw:
+        layers: ["elevation", "traversability", "variance"]
+        basic_layers: ["elevation"]
+        fps: 5.0
+      elevation_map_filter:
+        layers: ["min_filter", "smooth", "near_base_filtered", "despiked", "inpaint", "elevation"]
+        basic_layers: ["min_filter", "smooth", "near_base_filtered", "despiked", "inpaint"]
+        fps: 3.0
