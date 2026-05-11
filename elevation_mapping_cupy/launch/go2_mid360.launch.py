@@ -32,7 +32,7 @@ def generate_launch_description():
     )
     rviz_config_arg = DeclareLaunchArgument(
         "rviz_config",
-        default_value="",
+        default_value=os.path.join(share_dir, "rviz", "go2_mid360.rviz"),
         description="Path to an RViz config file.",
     )
 
