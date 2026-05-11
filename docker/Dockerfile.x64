@@ -102,4 +102,12 @@ RUN rosdep init || true
 WORKDIR /home/${USERNAME}/workspace
 USER ${USERNAME}
 
+RUN sudo apt update \
+    && sudo apt install -y --no-install-recommends \
+      ros-${ROS_DISTRO}-rmw-cyclonedds-cpp \
+    && sudo rm -rf /var/lib/apt/lists/*
+
+COPY --chown=ubuntu:ubuntu env/setup.sh /home/${USERNAME}/workspace/setup.sh
+RUN chmod +x /home/${USERNAME}/workspace/setup.sh
+
 CMD ["bash"]
