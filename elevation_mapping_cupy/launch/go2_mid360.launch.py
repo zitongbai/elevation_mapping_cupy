@@ -33,6 +33,16 @@ def generate_launch_description():
         default_value=os.path.join(share_dir, "rviz", "go2_mid360.rviz"),
         description="Path to an RViz config file.",
     )
+    launch_base_height_map_arg = DeclareLaunchArgument(
+        "launch_base_height_map",
+        default_value="true",
+        description="Launch the base-frame Float32MultiArray height map node.",
+    )
+    base_height_map_config_arg = DeclareLaunchArgument(
+        "base_height_map_config",
+        default_value="go2/base_height_map.yaml",
+        description="Name of the base height map config file within config/setups/.",
+    )
     robot_config_arg = DeclareLaunchArgument(
         "robot_config",
         default_value=default_go2_config,
@@ -42,8 +52,11 @@ def generate_launch_description():
     use_sim_time = LaunchConfiguration("use_sim_time")
     launch_rviz = LaunchConfiguration("launch_rviz")
     rviz_config = LaunchConfiguration("rviz_config")
+    launch_base_height_map = LaunchConfiguration("launch_base_height_map")
+    base_height_map_config = LaunchConfiguration("base_height_map_config")
     robot_config = LaunchConfiguration("robot_config")
     go2_param_path = PathJoinSubstitution([share_dir, "config", "setups", robot_config])
+    base_height_map_param_path = PathJoinSubstitution([share_dir, "config", "setups", base_height_map_config])
 
     elevation_mapping_node = Node(
         package=package_name,
@@ -67,13 +80,28 @@ def generate_launch_description():
         condition=IfCondition(launch_rviz),
     )
 
+    base_height_map_node = Node(
+        package=package_name,
+        executable="base_height_map_node.py",
+        name="base_height_map_node",
+        output="screen",
+        parameters=[
+            base_height_map_param_path,
+            {"use_sim_time": use_sim_time},
+        ],
+        condition=IfCondition(launch_base_height_map),
+    )
+
     return LaunchDescription(
         [
             use_sim_time_arg,
             launch_rviz_arg,
             rviz_config_arg,
+            launch_base_height_map_arg,
+            base_height_map_config_arg,
             robot_config_arg,
             elevation_mapping_node,
+            base_height_map_node,
             rviz_node,
         ]
     )

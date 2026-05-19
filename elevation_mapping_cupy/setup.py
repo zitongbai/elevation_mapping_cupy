@@ -20,6 +20,7 @@ setup(
     entry_points={
         'console_scripts': [
             'elevation_mapping_node.py = elevation_mapping_cupy.elevation_mapping_node:main',
+            'base_height_map_node.py = elevation_mapping_cupy.base_height_map_node:main',
         ],
     },
     data_files=[
