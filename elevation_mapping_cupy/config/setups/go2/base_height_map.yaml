@@ -9,12 +9,12 @@
     target_frame: "base"
 
     resolution: 0.1
-    x_min: -2.0
-    x_max: 6.0
-    y_min: -3.0
-    y_max: 3.0
+    x_min: -1.0
+    x_max: 2.0
+    y_min: -1.0
+    y_max: 1.0
 
-    publish_rate: 10.0
+    publish_rate: 50.0
     unknown_value: .nan
     interpolation: "nearest"
     use_latest_tf: true
