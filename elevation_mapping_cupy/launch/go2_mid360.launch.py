@@ -13,7 +13,7 @@ def generate_launch_description():
     share_dir = get_package_share_directory(package_name)
 
     core_param_path = os.path.join(share_dir, "config", "core", "core_param.yaml")
-    default_go2_config = "go2/mid360.yaml"
+    default_go2_config = "go2/dual_lidar.yaml"
 
     if not os.path.exists(core_param_path):
         raise FileNotFoundError(f"Missing core params: {core_param_path}")
