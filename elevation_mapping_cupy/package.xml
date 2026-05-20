@@ -35,6 +35,7 @@
     <depend>grid_map_rviz_plugin</depend>
     <!-- <depend>gazebo_ros</depend> -->
     <depend>python3-opencv</depend>
+    <exec_depend>python3-matplotlib</exec_depend>
     <depend>rosbag2_py</depend>
     <depend>python3-shapely</depend>
     <depend>python3-ruamel.yaml</depend>

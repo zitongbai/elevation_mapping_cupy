@@ -30,6 +30,7 @@ ament_python_install_package(${PROJECT_NAME})
 install(PROGRAMS
   scripts/elevation_mapping_node.py
   scripts/base_height_map_node.py
+  scripts/base_height_map_viewer.py
   scripts/synthetic_pointcloud_tf_publisher.py
   DESTINATION lib/${PROJECT_NAME}
 )
